@@ -2,9 +2,9 @@ package com.krakedev.proyectos.controllers;
 
 import java.util.List;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,30 +21,31 @@ import com.krakedev.proyectos.services.ProyectoService;
 @RequestMapping("/api/proyectos")
 public class ProyectoController {
 
-    private final ProyectoService service;
+	private final ProyectoService service;
 
-    public ProyectoController(ProyectoService service) {
-        super();
-        this.service = service;
-    }
+	public ProyectoController(ProyectoService service) {
+		super();
+		this.service = service;
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/")
+	public ResponseEntity<?> guardar(@RequestBody Proyecto proyecto) {
 
-    @PostMapping("/")
-    public ResponseEntity<?> guardar(@RequestBody Proyecto proyecto) {
+		try {
 
-        try {
+			Proyecto nuevo = service.guardar(proyecto);
 
-            Proyecto nuevo = service.guardar(proyecto);
+			return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
+		} catch (Exception e) {
 
-        } catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
-    }
-
-    @GetMapping("/")
+	@PreAuthorize("hasAnyRole('ADMIN','USER')")
+	@GetMapping("/")
     public ResponseEntity<?> listar() {
 
         try {
@@ -60,52 +61,49 @@ public class ProyectoController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> buscar(@PathVariable int id) {
+	@GetMapping("/{id}")
+	public ResponseEntity<?> buscar(@PathVariable int id) {
 
-        try {
+		try {
 
-            Proyecto proyecto = service.buscar(id);
+			Proyecto proyecto = service.buscar(id);
 
-            return ResponseEntity.ok(proyecto);
+			return ResponseEntity.ok(proyecto);
 
-        } catch (Exception e) {
+		} catch (Exception e) {
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
-    }
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> actualizar(@PathVariable int id,
-                                        @RequestBody Proyecto datos) {
+	@PutMapping("/{id}")
+	public ResponseEntity<?> actualizar(@PathVariable int id, @RequestBody Proyecto datos) {
 
-        try {
+		try {
 
-            Proyecto actualizado = service.actualizar(id, datos);
+			Proyecto actualizado = service.actualizar(id, datos);
 
-            return ResponseEntity.ok(actualizado);
+			return ResponseEntity.ok(actualizado);
 
-        } catch (Exception e) {
+		} catch (Exception e) {
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
-    }
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable int id) {
+	@PreAuthorize("hasRole('ADMIN')")
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> eliminar(@PathVariable int id) {
 
-        try {
+		try {
 
-            service.eliminar(id);
+			service.eliminar(id);
 
-            return ResponseEntity.ok("Proyecto eliminado");
+			return ResponseEntity.ok("Proyecto eliminado");
 
-        } catch (Exception e) {
+		} catch (Exception e) {
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
-    }
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
 }
