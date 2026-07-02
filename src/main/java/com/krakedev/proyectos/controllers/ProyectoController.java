@@ -77,7 +77,7 @@ public class ProyectoController {
         }
     }
 	
-	/*
+	
 	@GetMapping("/publico/resumen")
 	public ResponseEntity<?> resumen() {
 
@@ -92,7 +92,7 @@ public class ProyectoController {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 	                .body(e.getMessage());
 	    }
-	}*/
+	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscar(@PathVariable int id) {
