@@ -53,4 +53,10 @@ public class ProyectoService {
 
         return true;
     }
+    
+    /*
+    public Long contarProyectos() {
+        return repository.count();
+    }
+    */
 }

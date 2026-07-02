@@ -13,10 +13,26 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.krakedev.proyectos.entidades.Proyecto;
 import com.krakedev.proyectos.services.ProyectoService;
 
+/*
+@CrossOrigin(
+        origins = "http://localhost:5173",
+        allowedHeaders = {
+                "Authorization",
+                "Content-Type"
+        },
+        methods = {
+                RequestMethod.GET,
+                RequestMethod.POST,
+                RequestMethod.PUT,
+                RequestMethod.DELETE
+        }
+)*/
 @RestController
 @RequestMapping("/api/proyectos")
 public class ProyectoController {
@@ -60,6 +76,23 @@ public class ProyectoController {
                     .body(e.getMessage());
         }
     }
+	
+	/*
+	@GetMapping("/publico/resumen")
+	public ResponseEntity<?> resumen() {
+
+	    try {
+
+	        Long total = service.contarProyectos();
+
+	        return ResponseEntity.ok(total);
+
+	    } catch (Exception e) {
+
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body(e.getMessage());
+	    }
+	}*/
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscar(@PathVariable int id) {

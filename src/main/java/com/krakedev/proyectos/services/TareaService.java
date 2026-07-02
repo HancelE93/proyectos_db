@@ -19,6 +19,14 @@ public class TareaService {
     }
 
     public Tarea guardar(Tarea tarea) {
+
+        if (!tarea.getPrioridad().equals("ALTA")
+                && !tarea.getPrioridad().equals("MEDIA")
+                && !tarea.getPrioridad().equals("BAJA")) {
+
+            throw new IllegalArgumentException("Prioridad no válida");
+        }
+
         return repository.save(tarea);
     }
 
@@ -41,8 +49,10 @@ public class TareaService {
         tarea.setDescripcion(datos.getDescripcion());
         tarea.setFechaLimite(datos.getFechaLimite());
         tarea.setCostoEstimado(datos.getCostoEstimado());
+        tarea.setPrioridad(datos.getPrioridad());
         tarea.setProyecto(datos.getProyecto());
         tarea.setEmpleados(datos.getEmpleados());
+        
 
         return repository.save(tarea);
     }

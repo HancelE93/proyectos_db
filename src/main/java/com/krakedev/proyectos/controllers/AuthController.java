@@ -12,12 +12,29 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.krakedev.proyectos.entidades.Usuario;
 import com.krakedev.proyectos.repositories.UsuarioRepository;
 import com.krakedev.proyectos.security.JwtUtil;
 import com.krakedev.proyectos.services.TokenBlackListService;
 import com.krakedev.proyectos.services.UsuarioService;
 
+/*
+@CrossOrigin(
+        origins = "http://localhost:5173",
+        allowedHeaders = {
+                "Authorization",
+                "Content-Type"
+        },
+        methods = {
+                RequestMethod.GET,
+                RequestMethod.POST,
+                RequestMethod.PUT,
+                RequestMethod.DELETE
+        }
+)*/
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

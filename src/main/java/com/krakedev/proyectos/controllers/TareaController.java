@@ -13,10 +13,27 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 import com.krakedev.proyectos.entidades.Tarea;
 import com.krakedev.proyectos.services.TareaService;
 
+/*
+@CrossOrigin(
+        origins = "http://localhost:5173",
+        allowedHeaders = {
+                "Authorization",
+                "Content-Type"
+        },
+        methods = {
+                RequestMethod.GET,
+                RequestMethod.POST,
+                RequestMethod.PUT,
+                RequestMethod.DELETE
+        }
+)*/
 @RestController
 @RequestMapping("/api/tareas")
 public class TareaController {
@@ -37,6 +54,11 @@ public class TareaController {
             Tarea nueva = service.guardar(tarea);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(nueva);
+
+        } catch (IllegalArgumentException e) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(java.util.Map.of("error", e.getMessage()));
 
         } catch (Exception e) {
 
