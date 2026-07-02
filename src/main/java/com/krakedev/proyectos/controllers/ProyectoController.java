@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.krakedev.proyectos.entidades.Proyecto;
 import com.krakedev.proyectos.services.ProyectoService;
 
-/*
+
 @CrossOrigin(
         origins = "http://localhost:5173",
         allowedHeaders = {
@@ -32,7 +32,7 @@ import com.krakedev.proyectos.services.ProyectoService;
                 RequestMethod.PUT,
                 RequestMethod.DELETE
         }
-)*/
+)
 @RestController
 @RequestMapping("/api/proyectos")
 public class ProyectoController {

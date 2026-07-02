@@ -21,7 +21,7 @@ import com.krakedev.proyectos.security.JwtUtil;
 import com.krakedev.proyectos.services.TokenBlackListService;
 import com.krakedev.proyectos.services.UsuarioService;
 
-/*
+
 @CrossOrigin(
         origins = "http://localhost:5173",
         allowedHeaders = {
@@ -34,7 +34,7 @@ import com.krakedev.proyectos.services.UsuarioService;
                 RequestMethod.PUT,
                 RequestMethod.DELETE
         }
-)*/
+)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
